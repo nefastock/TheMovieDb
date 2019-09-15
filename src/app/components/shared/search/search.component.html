@@ -1,0 +1,38 @@
+<app-loading *ngIf="loadingMovies"></app-loading>
+<div class="container main-container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label>Search:</label>
+                <input [(ngModel)]="searchTextInput" #searchText name="search" (keyup.enter)="searchMovie(searchText.value)" type="text" class="form-control" placeholder="search movie">
+            </div>
+        </div>
+    </div>
+    <div class="alert alert-warning mt-5" role="alert" *ngIf="msgSearchNoFount">
+        <strong>No hemos encontrado resultados.</strong>
+
+    </div>
+    <br>
+    <br>
+
+    <div class="alert alert-warning  mt-5" role="alert" *ngIf="msgSearchTextEmpty">
+        <strong>Favor ingrese un valor, el campo de busqueda está vacío.</strong>
+
+    </div>
+    <div class="row animated fadeIn fast" *ngIf="!msgSearchNoFount">
+        <div class="card-columns">
+            <div class="card" *ngFor="let movie of moviesSearch | slice:0:9">
+                <img [src]="movie|peliculaImagen" class="card-img-top" [alt]="movie.original_title">
+                <div class="card-body">
+                    <h5 class="card-title">{{ movie.title }}</h5>
+                    <p class="card-text text-justify">{{ movie.overview | slice:0:300 }}...</p>
+                    <button type="button" class="btn btn-outline-primary btn-block" [routerLink]="['/movie', movie.id]">
+                      Ver mas...
+                  </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>

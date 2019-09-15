@@ -1,0 +1,34 @@
+<app-loading *ngIf="loadingMovies"></app-loading>
+<div *ngIf="movieFound" class="container main-container animated fadeIn fast">
+    <h1>{{ movieFound.original_title }}</h1>
+    <div class="row">
+        <div class="col-md-5">
+            <img class="img-thumbnail img-fluid" [src]="movieFound|peliculaImagen" [alt]="movieFound.original_title">
+        </div>
+        <div class="col-md-7">
+            <h3>Sinopsis</h3>
+            <hr>
+            <p class="text-justify">
+                Título: {{ movieFound.original_title }}
+            </p>
+            <p class="text-justify">
+                Descripción: {{ movieFound.overview }}
+            </p>
+            <p>
+                Popularidad: <span class="badge badge-primary">{{ movieFound.popularity | number:'.0-0' }}</span>
+            </p>
+            <p>
+                Votos: <span class="badge badge-primary">{{ movieFound.vote_count }}</span>
+            </p>
+            <p>
+                Voto Promedio: <span class="badge badge-primary">{{ movieFound.vote_average }}</span>
+            </p>
+            <p>
+                Fecha Lanzamiento: <span class="badge badge-primary">{{ movieFound.release_date }}</span>
+            </p>
+            <br>
+            <button *ngIf="categoria !=='populares'" [routerLink]="['/home', categoria]" type="button" class="btn btn-outline-danger">Regresar</button>
+            <button *ngIf="categoria ==='populares'" [routerLink]="['/home']" type="button" class="btn btn-outline-danger">Regresar</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,45 @@
+<app-loading *ngIf="loadingMovies"></app-loading>
+<div class="row  m-5">
+    <div class="col-md-6">
+        <button class="btn btn-outline-primary m-1" [ngClass]="{'active': categoria == 'populares'}" (click)="showPopularities()">                
+            Populares
+        </button>
+        <button class="btn btn-outline-primary m-1" [ngClass]="{'active': categoria == 'ninos'}" (click)="showChildren()"> 
+            Niños
+        </button>
+        <button class="btn btn-outline-primary m-1" [ngClass]="{'active': categoria == 'cines'}" (click)="showCines()"> 
+            En cines
+        </button>
+    </div>
+    <div class="col-md-6">
+        <ul #annioLista class="list-group">
+            <li *ngFor="let annio of annios; let i = index;" (click)="showAnnio(annio)" [ngClass]="{'active': annioSelected===annio}" class="list-group-item puntero">
+                {{annio}}
+            </li>
+
+        </ul>
+    </div>
+
+</div>
+
+<div class="card-columns m-5 animated fadeIn">
+    <div *ngFor="let movie of moviesToShow | slice:0:9; index as i" (mouseover)="popularityAndVotes(i)" (mouseout)="popularityAndVotes(i)" class="card puntero">
+        <img class="card-img-top" [src]="movie | peliculaImagen" alt="...">
+        <div *ngIf="i == showId" class="card-img-overlay text-center bg-light" style="opacity: 0.8; height: 25%; font-size: small;">
+            <p class="card-text">Popularity: {{movie.popularity}}</p>
+            <p class="card-text">Votes: {{movie.vote_count}}</p>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">{{ movie.title }}</h5>
+            <p class="card-text text-justify">{{ movie.overview | slice:0:300 }}...</p>
+            <button type="button" class="btn btn-outline-primary btn-block" [routerLink]="['/movie', movie.id, categoria]">
+                      Ver mas...
+                  </button>
+        </div>
+        <div class="card-body">
+            <span class="badge badge-pill badge-primary">
+                {{movie.release_date}}    
+            </span>
+        </div>
+    </div>
+</div>
